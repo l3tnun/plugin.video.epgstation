@@ -1,0 +1,26 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: 2017-06-09 00:00+0000\n"
+"PO-Revision-Date: 2017-06-09 09:00+0900\n"
+"Last-Translator: l3tnun <l3tnun@gmail.com>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30200"
+msgid "基本"
+msgstr "基本"
+
+msgctxt "#30201"
+msgid "EPGStation URL"
+msgstr "EPGStation URL"
+
+msgctxt "#30202"
+msgid "表示上限"
+msgstr "表示上限"

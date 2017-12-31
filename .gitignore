@@ -1,0 +1,4 @@
+*.swp
+*.log
+*.pyo
+.DS_Store
