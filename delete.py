@@ -5,6 +5,7 @@ import xbmc, xbmcgui, xbmcaddon
 import os
 import sys
 import urllib2
+import urlutil
 from urlparse import urljoin
 
 settings = xbmcaddon.Addon('plugin.video.epgstation')
@@ -23,7 +24,8 @@ if __name__ == '__main__' and len(sys.argv) == 3:
         progress.update(0)
 
         try:
-            req = urllib2.Request(urljoin(server_url, '/api/recorded/' + str(videoId)))
+            urlInfo = urlutil.getUrlInfo(server_url)
+            req = urllib2.Request(url=urljoin(urlInfo["url"], '/api/recorded/' + str(videoId)), headers=urlInfo["headers"])
             req.get_method = lambda: 'DELETE'
             url = opener.open(req)
         except:

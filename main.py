@@ -8,6 +8,7 @@ import xbmcaddon
 import datetime
 import simplejson as json
 import urllib2
+import urlutil
 from urlparse import urljoin
 from consts import *
 
@@ -86,7 +87,9 @@ if __name__ == '__main__':
         settings.openSettings()
         server_url = settings.getSetting('server_url')
 
-    response = urllib2.urlopen(urljoin(server_url, '/api/recorded?limit=' + str(recorded_length) + '&offset=0'))
+    urlInfo = urlutil.getUrlInfo(server_url)
+    request = urllib2.Request(url=urljoin(urlInfo["url"], '/api/recorded?limit=' + str(recorded_length) + '&offset=0'), headers=urlInfo["headers"])
+    response = urllib2.urlopen(request)
     strjson = response.read()
     videos = json.loads(strjson)['recorded']
 
