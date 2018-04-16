@@ -22,7 +22,7 @@ xbmcplugin.setContent(addon_handle, 'movies')
 def addList(video, server_url):
     li = xbmcgui.ListItem(video['name'])
 
-    thumbnail_url = urljoin(server_url, '/thumbnail/' + str(video['id']) + '.jpg')
+    thumbnail_url = urljoin(server_url, '/api/recorded/' + str(video['id']) + '/thumbnail')
     li.setIconImage(thumbnail_url)
     li.setArt({
         'poster': thumbnail_url,
