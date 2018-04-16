@@ -34,10 +34,17 @@ if __name__ == '__main__' and len(sys.argv) == 3:
             xbmcgui.Dialog().ok(xbmc.getLocalizedString(16205), xbmc.getLocalizedString(16206))
             sys.exit(1)
 
-        xbmc.executebuiltin('Container.Refresh') # list 更新
-
-        xbmc.sleep(400)
+        xbmc.sleep(200)
         progress.update(100)
+        progress.close()
+
+        # 選択位置を一つ上に移動する
+        xbmc.sleep(500)
+        xbmc.executebuiltin('Action(Up)')
+
+        # リスト更新
+        xbmc.executebuiltin('Container.Refresh')
+
 
     sys.exit(0)
 
