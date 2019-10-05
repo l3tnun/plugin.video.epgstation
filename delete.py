@@ -18,7 +18,7 @@ if __name__ == '__main__' and len(sys.argv) == 3:
     opener = urllib2.build_opener(urllib2.HTTPHandler)
 
     dialog = xbmcgui.Dialog()
-    if dialog.yesno(xbmc.getLocalizedString(122).encode('utf_8'), xbmc.getLocalizedString(433).encode('utf_8') % fileName, yeslabel=xbmc.getLocalizedString(117)):
+    if dialog.yesno(xbmc.getLocalizedString(122).encode('utf_8'), fileName + 'を削除しますか?', yeslabel=xbmc.getLocalizedString(117)):
         progress = xbmcgui.DialogProgress()
         progress.create(plugin, '削除中...')
         progress.update(0)
