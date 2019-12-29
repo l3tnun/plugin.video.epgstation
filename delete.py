@@ -25,7 +25,7 @@ if __name__ == '__main__' and len(sys.argv) == 3:
 
         try:
             urlInfo = urlutil.getUrlInfo(server_url)
-            req = urllib2.Request(url=urljoin(urlInfo["url"], '/api/recorded/' + str(videoId)), headers=urlInfo["headers"])
+            req = urllib2.Request(url=urljoin(urlInfo["url"], 'api/recorded/' + str(videoId)), headers=urlInfo["headers"])
             req.get_method = lambda: 'DELETE'
             url = opener.open(req)
         except:

@@ -22,7 +22,7 @@ xbmcplugin.setContent(addon_handle, 'movies')
 def addList(video, server_url):
     li = xbmcgui.ListItem(video['name'])
 
-    thumbnail_url = urljoin(server_url, '/api/recorded/' + str(video['id']) + '/thumbnail')
+    thumbnail_url = urljoin(server_url, 'api/recorded/' + str(video['id']) + '/thumbnail')
     li.setIconImage(thumbnail_url)
     li.setArt({
         'poster': thumbnail_url,
@@ -73,7 +73,7 @@ def addList(video, server_url):
         ('削除', 'RunScript(%s/delete.py, %d, %s)' % (settings.getAddonInfo('path'), video['id'], video['name']))
     ])
 
-    video_url = urljoin(server_url, '/api/recorded/' + str(video['id']) + '/file')
+    video_url = urljoin(server_url, 'api/recorded/' + str(video['id']) + '/file')
     if video['original'] == False and 'encoded' in video and len(video['encoded']) > 0:
         video_url += '?encodedId=' + str(video['encoded'][0]['encodedId'])
 
@@ -88,7 +88,8 @@ if __name__ == '__main__':
         server_url = settings.getSetting('server_url')
 
     urlInfo = urlutil.getUrlInfo(server_url)
-    request = urllib2.Request(url=urljoin(urlInfo["url"], '/api/recorded?limit=' + str(recorded_length) + '&offset=0'), headers=urlInfo["headers"])
+
+    request = urllib2.Request(url=urljoin(urlInfo["url"], 'api/recorded?limit=' + str(recorded_length) + '&offset=0'), headers=urlInfo["headers"])
     response = urllib2.urlopen(request)
     strjson = response.read()
     videos = json.loads(strjson)['recorded']
