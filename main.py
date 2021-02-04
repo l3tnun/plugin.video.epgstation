@@ -21,15 +21,15 @@ xbmcplugin.setContent(addon_handle, 'movies')
 
 def addList(video, server_url):
     li = xbmcgui.ListItem(video['name'])
-
-    thumbnail_url = urljoin(server_url, 'api/recorded/' + str(video['id']) + '/thumbnail')
-    li.setIconImage(thumbnail_url)
-    li.setArt({
-        'poster': thumbnail_url,
-        'fanart': thumbnail_url,
-        'landscape': thumbnail_url,
-        'thumb': thumbnail_url
-    })
+    if video['thumbnails']:
+        thumbnail_url = urljoin(server_url, 'api/thumbnails/' + str(video['thumbnails'][0]))
+        li.setIconImage(thumbnail_url)
+        li.setArt({
+            'poster': thumbnail_url,
+            'fanart': thumbnail_url,
+            'landscape': thumbnail_url,
+            'thumb': thumbnail_url
+        })
 
     startdate = datetime.datetime.fromtimestamp(video['startAt'] / 1000)
 
@@ -52,9 +52,9 @@ def addList(video, server_url):
             # ジャンル1
             info['genre'] = GENRE1[video['genre1']]
 
-            # ジャンル2
-            if 'genre2' in video and video['genre1'] in GENRE2 and video['genre2'] in GENRE2[video['genre1']]:
-                info['genre'] += ' / ' + GENRE2[video['genre1']][video['genre2']]
+            # サブジャンル
+            if 'subGenre1' in video and video['genre1'] in GENRE2 and video['subGenre1'] in GENRE2[video['genre1']]:
+                info['genre'] += ' / ' + GENRE2[video['genre1']][video['subGenre1']]
 
         # 詳細
         if 'description' in video and not 'extended' in video:
@@ -73,9 +73,9 @@ def addList(video, server_url):
         ('削除', 'RunScript(%s/delete.py, %d, %s)' % (settings.getAddonInfo('path'), video['id'], video['name']))
     ])
 
-    video_url = urljoin(server_url, 'api/recorded/' + str(video['id']) + '/file')
-    if video['original'] == False and 'encoded' in video and len(video['encoded']) > 0:
-        video_url += '?encodedId=' + str(video['encoded'][0]['encodedId'])
+    video_url = urljoin(server_url, 'api/videos/' + str(video['videoFiles'][0]['id']))
+    # if video['original'] == False and 'encoded' in video and len(video['encoded']) > 0:
+    #     video_url += '?encodedId=' + str(video['encoded'][0]['encodedId'])
 
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=video_url, listitem=li)
 
@@ -89,10 +89,10 @@ if __name__ == '__main__':
 
     urlInfo = urlutil.getUrlInfo(server_url)
 
-    request = urllib2.Request(url=urljoin(urlInfo["url"], 'api/recorded?limit=' + str(recorded_length) + '&offset=0'), headers=urlInfo["headers"])
+    request = urllib2.Request(url=urljoin(urlInfo["url"], 'api/recorded?isHalfWidth=true&limit=' + str(recorded_length) + '&offset=0'), headers=urlInfo["headers"])
     response = urllib2.urlopen(request)
     strjson = response.read()
-    videos = json.loads(strjson)['recorded']
+    videos = json.loads(strjson)['records']
 
     for video in videos:
         addList(video, server_url)
