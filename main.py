@@ -23,7 +23,6 @@ def addList(video, server_url):
     li = xbmcgui.ListItem(video['name'])
     if video['thumbnails']:
         thumbnail_url = urljoin(server_url, 'api/thumbnails/' + str(video['thumbnails'][0]))
-        li.setIconImage(thumbnail_url)
         li.setArt({
             'poster': thumbnail_url,
             'fanart': thumbnail_url,
