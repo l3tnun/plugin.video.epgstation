@@ -4,9 +4,9 @@
 import xbmc, xbmcgui, xbmcaddon
 import os
 import sys
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import urlutil
-from urlparse import urljoin
+from urllib.parse import urljoin
 
 settings = xbmcaddon.Addon('plugin.video.epgstation')
 plugin = settings.getAddonInfo('name')
@@ -15,7 +15,7 @@ if __name__ == '__main__' and len(sys.argv) == 3:
     server_url = settings.getSetting('server_url')
     videoId = sys.argv[1];
     fileName = sys.argv[2];
-    opener = urllib2.build_opener(urllib2.HTTPHandler)
+    opener = urllib.request.build_opener(urllib.request.HTTPHandler)
 
     dialog = xbmcgui.Dialog()
     if dialog.yesno(xbmc.getLocalizedString(122).encode('utf_8'), fileName + 'を削除しますか?', yeslabel=xbmc.getLocalizedString(117)):
@@ -25,7 +25,7 @@ if __name__ == '__main__' and len(sys.argv) == 3:
 
         try:
             urlInfo = urlutil.getUrlInfo(server_url)
-            req = urllib2.Request(url=urljoin(urlInfo["url"], 'api/recorded/' + str(videoId)), headers=urlInfo["headers"])
+            req = urllib.request.Request(url=urljoin(urlInfo["url"], 'api/recorded/' + str(videoId)), headers=urlInfo["headers"])
             req.get_method = lambda: 'DELETE'
             url = opener.open(req)
         except:

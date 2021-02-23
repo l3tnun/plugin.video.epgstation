@@ -7,9 +7,9 @@ import xbmcplugin
 import xbmcaddon
 import datetime
 import simplejson as json
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import urlutil
-from urlparse import urljoin
+from urllib.parse import urljoin
 from consts import *
 
 addon_handle = int(sys.argv[1])
@@ -64,7 +64,7 @@ def addList(video, server_url):
             info['plot'] = video['description'] + '\n\n' + video['extended']
             info['plotoutline'] = video['description']
     except:
-        print 'error'
+        print('error')
 
     li.setInfo('video', info)
 
@@ -89,8 +89,8 @@ if __name__ == '__main__':
 
     urlInfo = urlutil.getUrlInfo(server_url)
 
-    request = urllib2.Request(url=urljoin(urlInfo["url"], 'api/recorded?isHalfWidth=true&limit=' + str(recorded_length) + '&offset=0'), headers=urlInfo["headers"])
-    response = urllib2.urlopen(request)
+    request = urllib.request.Request(url=urljoin(urlInfo["url"], 'api/recorded?isHalfWidth=true&limit=' + str(recorded_length) + '&offset=0'), headers=urlInfo["headers"])
+    response = urllib.request.urlopen(request)
     strjson = response.read()
     videos = json.loads(strjson)['records']
 

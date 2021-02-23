@@ -4,7 +4,7 @@
     name="EPGStation"
     provider-name="l3tnun">
     <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.simplejson"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="main.py">
